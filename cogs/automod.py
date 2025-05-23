@@ -30,7 +30,7 @@ DEGENERATE_CHANNELS = [
 ]
 
 
-class Automod:
+class Automod(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         
@@ -259,7 +259,7 @@ class Automod:
             ban_msg = "<:greentick:318044721807360010>" if gre_msg is not None else "<:redtick:318044813444251649>"
 
         plonks = '\n'.join(
-            [f"<@{x[0]}>" for x in id_and_plonk if x[1]]) or "None"
+            [f"<@{x[0]}>"] for x in id_and_plonk if x[1]) or "None"
         server_prefixes = cfg[2].split(',')
         server_prefixes = '\n'.join(server_prefixes)
         e.add_field(name='Enabled (log)', value=ena)

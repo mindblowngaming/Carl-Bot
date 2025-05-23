@@ -204,7 +204,7 @@ WOW_SPECS = [
 ]
 
 
-class Blizzard:
+class Blizzard(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -270,8 +270,8 @@ class Blizzard:
             realm = realm2[0]
             replaced = True
         name = leftover_args[0].lower()
-        url = "https://" + zone + ".api.battle.net/wow/character/" + realm + "/" + name + \
-            "?fields=items&locale=" + locale + "&apikey=" + "TOKEN"
+        url = "https://" + zone + ".api.blizzard.com/profile/wow/character/" + realm + "/" + name + \
+            "?namespace=profile-" + zone + "&locale=" + locale + "&access_token=" + "TOKEN"
         async with self.bot.session.get(url) as r:
             response = await r.json()
             if "status" in response:
@@ -281,9 +281,9 @@ class Blizzard:
                         await ctx.message.delete()
                     return
 
-        url = "https://" + zone + ".api.battle.net/wow/character/" + realm + "/" + name + \
+        url = "https://" + zone + ".api.blizzard.com/profile/wow/character/" + realm + "/" + name + \
             "?fields=progression&locale=" + locale + \
-            "&apikey=" + "TOKEN"
+            "&access_token=" + "TOKEN"
         async with self.bot.session.get(url) as r:
             progressionresponse = await r.json()
         try:
@@ -392,9 +392,9 @@ class Blizzard:
             if i["mythicKills"] != 0:
                 tos_progress["M"] += 1
 
-        url = "https://" + zone + ".api.battle.net/wow/character/" + realm + "/" + name + \
+        url = "https://" + zone + ".api.blizzard.com/profile/wow/character/" + realm + "/" + name + \
             "?fields=progression+achievements&locale=" + locale + \
-            "&apikey=" + "TOKEN"
+            "&access_token=" + "TOKEN"
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as r:
                 rx = await r.json()
